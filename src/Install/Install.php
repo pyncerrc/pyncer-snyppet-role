@@ -48,7 +48,7 @@ class Install extends AbstractInstall
         return true;
     }
 
-    protected function getRequired(): array
+    public function getRequired(): array
     {
         return [
             'access' => '*'
