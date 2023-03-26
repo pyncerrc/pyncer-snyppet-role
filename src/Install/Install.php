@@ -1,6 +1,8 @@
 <?php
 namespace Pyncer\Snyppet\Role\Install;
 
+use Pyncer\Database\Table\Column\IntSize;
+use Pyncer\Database\Table\ReferentialAction;
 use Pyncer\Database\Value;
 use Pyncer\Snyppet\AbstractInstall;
 
@@ -19,8 +21,8 @@ class Install extends AbstractInstall
 
         $this->connection->createTable('user__role')
             ->serial('id')
-            ->int('user_id', IntSize::BIG)->null()->index()
-            ->int('role_id', IntSize::BIG)->null()->index()
+            ->int('user_id', IntSize::BIG)->index()
+            ->int('role_id', IntSize::BIG)->index()
             ->index(null, 'user_id', 'role_id')->unique()
             ->foreignKey(null, 'user_id')
                 ->references('user', 'id')
