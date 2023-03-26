@@ -6,6 +6,6 @@ SnyppetManager::register(new Snyppet(
     'role',
     dirname(__DIR__),
     [
-        'app' => ['Role']
+        'user' => ['Role']
     ],
 ));
