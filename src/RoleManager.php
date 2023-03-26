@@ -5,7 +5,6 @@ use Pyncer\Database\ConnectionInterface;
 use Pyncer\Database\ConnectionTrait;
 use Pyncer\Snyppet\Access\Table\User\UserModel;
 use Pyncer\Snyppet\Access\User\Group;
-use Pyncer\Snyppet\Role\Table\Role\UserModel;
 
 class RoleManager
 {

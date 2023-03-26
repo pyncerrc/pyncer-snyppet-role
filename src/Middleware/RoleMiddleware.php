@@ -4,6 +4,9 @@ namespace Pyncer\Snyppet\Role\Middleware;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
 use Pyncer\App\Identifier as ID;
+use Pyncer\Access\AuthenticatorInterface;
+use Pyncer\Database\ConnectionInterface;
+use Pyncer\Exception\UnexpectedValueException;
 use Pyncer\Http\Server\MiddlewareInterface;
 use Pyncer\Http\Server\RequestHandlerInterface;
 use Pyncer\Snyppet\Role\RoleManager;
@@ -16,13 +19,38 @@ class RoleMiddleware implements MiddlewareInterface
         RequestHandlerInterface $handler
     ): PsrResponseInterface
     {
+        // Database
+        if (!$handler->has(ID::DATABASE)) {
+            throw new UnexpectedValueException(
+                'Database connection expected.'
+            );
+        }
+
         $connection = $handler->get(ID::DATABASE);
+        if (!$connection instanceof ConnectionInterface) {
+            throw new UnexpectedValueException('Invalid database connection.');
+        }
 
-        $roles = new RoleManager($connection);
+        // Access
+        if (!$handler->has(ID::ACCESS)) {
+            throw new UnexpectedValueException(
+                'Access authenticator expected.'
+            );
+        }
 
-        ID::register('roles');
+        $access = $handler->get(ID::ACCESS);
+        if (!$connection instanceof AuthenticatorInterface) {
+            throw new UnexpectedValueException('Invalid access authenticator.');
+        }
 
-        $handler->set(ID::roles(), $roles);
+        $roles = new RoleManager(
+            $connection,
+            $access->getUser()
+        );
+
+        ID::register('role');
+
+        $handler->set(ID::role(), $roles);
 
         return $handler->next($request, $response);
     }
