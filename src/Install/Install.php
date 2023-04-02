@@ -39,11 +39,11 @@ class Install extends AbstractInstall
 
     protected function safeUninstall(): bool
     {
-        if ($connection->hasTable('user__role')) {
+        if ($this->connection->hasTable('user__role')) {
             $this->connection->dropTable('user__role');
         }
 
-        if ($connection->hasTable('role')) {
+        if ($this->connection->hasTable('role')) {
             $this->connection->dropTable('role');
         }
 
