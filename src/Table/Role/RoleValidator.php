@@ -13,14 +13,14 @@ class RoleValidator extends AbstractValidator
     {
         parent::__construct($connection);
 
-        $this->addRule(
+        $this->addRules(
             'name',
             new StringRule(
                 maxLength: 50,
             ),
         );
 
-        $this->addRule(
+        $this->addRules(
             'alias',
             new StringRule(
                 maxLength: 50,
@@ -34,12 +34,12 @@ class RoleValidator extends AbstractValidator
             ])
         );
 
-        $this->addRule(
+        $this->addRules(
             'enabled',
             new BoolRule(),
         );
 
-        $this->addRule(
+        $this->addRules(
             'deleted',
             new BoolRule(),
         );
