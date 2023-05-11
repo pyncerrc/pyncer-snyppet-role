@@ -5,6 +5,7 @@ use Pyncer\Data\Validation\AbstractValidator;
 use Pyncer\Database\ConnectionInterface;
 use Pyncer\Validation\Rule\BoolRule;
 use Pyncer\Validation\Rule\EnumRule;
+use Pyncer\Validation\Rule\RequiredRule;
 use Pyncer\Validation\Rule\StringRule;
 
 class RoleValidator extends AbstractValidator
@@ -15,6 +16,7 @@ class RoleValidator extends AbstractValidator
 
         $this->addRules(
             'name',
+            new RequiredRule(),
             new StringRule(
                 maxLength: 50,
             ),
@@ -22,6 +24,7 @@ class RoleValidator extends AbstractValidator
 
         $this->addRules(
             'alias',
+            new RequiredRule(),
             new StringRule(
                 maxLength: 50,
             ),
@@ -29,6 +32,7 @@ class RoleValidator extends AbstractValidator
 
         $this->addRules(
             'group',
+            new RequiredRule(),
             new EnumRule([
                 'guest', 'user', 'admin', 'super'
             ])
