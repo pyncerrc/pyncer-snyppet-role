@@ -39,7 +39,7 @@ class RoleMiddleware implements MiddlewareInterface
         }
 
         $access = $handler->get(ID::ACCESS);
-        if (!$connection instanceof AuthenticatorInterface) {
+        if (!$access instanceof AuthenticatorInterface) {
             throw new UnexpectedValueException('Invalid access authenticator.');
         }
 
