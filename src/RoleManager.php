@@ -32,7 +32,7 @@ class RoleManager
             ->compare('deleted', false)
             ->compare(['user__role', 'user_id'], $this->userModel->getId());
 
-        switch ($this->user->getGroup()) {
+        switch ($this->userModel->getGroup()) {
             case 'admin':
                 $where->compare('group', 'super', '!=');
                 break;
