@@ -43,14 +43,16 @@ class RoleMiddleware implements MiddlewareInterface
             throw new UnexpectedValueException('Invalid access authenticator.');
         }
 
-        $roles = new RoleManager(
-            $connection,
-            $access->getUser()
-        );
+        if ($access->getUser() !== null) {
+            $roles = new RoleManager(
+                $connection,
+                $access->getUser()
+            );
 
-        ID::register('role');
+            ID::register('role');
 
-        $handler->set(ID::role(), $roles);
+            $handler->set(ID::role(), $roles);
+        }
 
         return $handler->next($request, $response);
     }
