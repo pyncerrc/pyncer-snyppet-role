@@ -80,6 +80,11 @@ class RoleManager
         return ($this->userModel->getGroup() === Group::SUPER);
     }
 
+    public function is(string $role): bool
+    {
+        return $this->isAnyOf($role);
+    }
+
     public function isAnyOf(string ...$roles): bool
     {
         if ($this->isSuper()) {
