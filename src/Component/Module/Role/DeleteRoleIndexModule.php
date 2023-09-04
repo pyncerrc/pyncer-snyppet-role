@@ -2,9 +2,11 @@
 namespace Pyncer\Snyppet\Role\Component\Module\Role;
 
 use Pyncer\App\Identifier as ID;
-use Pyncer\Snyppet\Role\Table\Role\RoleMapper;
 use Pyncer\Component\Module\AbstractDeleteIndexModule;
 use Pyncer\Data\Mapper\MapperInterface;
+use Pyncer\Data\MapperQuery\MapperQueryInterface;
+use Pyncer\Snyppet\Role\Table\Role\RoleMapper;
+use Pyncer\Snyppet\Role\Table\Role\RoleMapperQuery;
 
 class DeleteRoleItemModule extends AbstractDeleteIndexModule
 {
@@ -12,5 +14,11 @@ class DeleteRoleItemModule extends AbstractDeleteIndexModule
     {
         $connection = $this->get(ID::DATABASE);
         return new RoleMapper($connection);
+    }
+
+    protected function forgeMapperQuery(): MapperQueryInterface
+    {
+        $connection = $this->get(ID::DATABASE);
+        return new RoleMapperQuery($connection, $this->request);
     }
 }

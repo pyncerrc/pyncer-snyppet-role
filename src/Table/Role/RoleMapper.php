@@ -1,9 +1,11 @@
 <?php
 namespace Pyncer\Snyppet\Role\Table\Role;
 
-use Pyncer\Snyppet\Role\Table\Role\RoleModel;
 use Pyncer\Data\Mapper\AbstractMapper;
 use Pyncer\Data\Model\ModelInterface;
+use Pyncer\Data\MapperQuery\MapperQueryInterface;
+use Pyncer\Snyppet\Role\Table\Role\RoleMapperQuery;
+use Pyncer\Snyppet\Role\Table\Role\RoleModel;
 
 class RoleMapper extends AbstractMapper
 {
@@ -20,6 +22,11 @@ class RoleMapper extends AbstractMapper
     public function isValidModel(ModelInterface $model): bool
     {
         return ($model instanceof RoleModel);
+    }
+
+    public function isValidMapperQuery(MapperQueryInterface $mapperQuery): bool
+    {
+        return ($mapperQuery instanceof RoleMapperQuery);
     }
 
     public function selectByAlias(
