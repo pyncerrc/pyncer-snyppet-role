@@ -8,7 +8,7 @@ use Pyncer\Data\MapperQuery\MapperQueryInterface;
 use Pyncer\Snyppet\Role\Table\Role\RoleMapper;
 use Pyncer\Snyppet\Role\Table\Role\RoleMapperQuery;
 
-class DeleteRoleItemModule extends AbstractDeleteIndexModule
+class DeleteRoleIndexModule extends AbstractDeleteIndexModule
 {
     protected function forgeMapper(): MapperInterface
     {
