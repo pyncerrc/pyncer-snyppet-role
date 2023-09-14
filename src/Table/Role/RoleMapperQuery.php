@@ -2,7 +2,7 @@
 namespace Pyncer\Snyppet\Role\Table\Role;
 
 use Pyncer\Data\MapperQuery\AbstractRequestMapperQuery;
-use Pyncer\Snyppet\Access\User\Group;
+use Pyncer\Snyppet\Access\User\UserGroup;
 
 class RoleMapperQuery extends AbstractRequestMapperQuery
 {
@@ -25,7 +25,7 @@ class RoleMapperQuery extends AbstractRequestMapperQuery
         }
 
         if ($left === 'group' &&
-            Group::tryFrom($right) !== null &&
+            UserGroup::tryFrom($right) !== null &&
             $operator === '='
         ) {
             return true;

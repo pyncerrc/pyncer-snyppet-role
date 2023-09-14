@@ -2,7 +2,7 @@
 namespace Pyncer\Snyppet\Role\Table\Role;
 
 use Pyncer\Data\Model\AbstractModel;
-use Pyncer\Snyppet\Access\User\Group;
+use Pyncer\Snyppet\Access\User\UserGroup;
 
 class RoleModel extends AbstractModel
 {
@@ -26,14 +26,14 @@ class RoleModel extends AbstractModel
         return $this;
     }
 
-    public function getGroup(): Group
+    public function getGroup(): UserGroup
     {
         $value = $this->get('group');
-        return Group::from($value);
+        return UserGroup::from($value);
     }
-    public function setGroup(string|Group $value): static
+    public function setGroup(string|UserGroup $value): static
     {
-        if ($value instanceof Group) {
+        if ($value instanceof UserGroup) {
             $value = $group->value;
         }
 

@@ -4,7 +4,7 @@ namespace Pyncer\Snyppet\Role;
 use Pyncer\Database\ConnectionInterface;
 use Pyncer\Database\ConnectionTrait;
 use Pyncer\Snyppet\Access\Table\User\UserModel;
-use Pyncer\Snyppet\Access\User\Group;
+use Pyncer\Snyppet\Access\User\UserGroup;
 
 class RoleManager
 {
@@ -33,14 +33,14 @@ class RoleManager
             ->compare(['user__role', 'user_id'], $this->userModel->getId());
 
         switch ($this->userModel->getGroup()) {
-            case 'admin':
+            case UserGroup::ADMIN:
                 $where->compare('group', 'super', '!=');
                 break;
-            case 'user':
+            case UserGroup::USER:
                 $where->compare('group', 'super', '!=');
                 $where->compare('group', 'admin', '!=');
                 break;
-            case 'guest':
+            case UserGroup::GUEST:
                 $where->compare('group', 'guest');
                 break;
         }
@@ -54,7 +54,7 @@ class RoleManager
 
     public function isGuest(): bool
     {
-        return ($this->userModel->getGroup() === Group::GUEST);
+        return ($this->userModel->getGroup() === UserGroup::GUEST);
     }
 
     public function isUser(): bool
@@ -63,7 +63,7 @@ class RoleManager
             return true;
         }
 
-        return ($this->userModel->getGroup() === Group::USER);
+        return ($this->userModel->getGroup() === UserGroup::USER);
     }
 
     public function isAdmin(): bool
@@ -72,12 +72,12 @@ class RoleManager
             return true;
         }
 
-        return ($this->userModel->getGroup() === Group::ADMIN);
+        return ($this->userModel->getGroup() === UserGroup::ADMIN);
     }
 
     public function isSuper(): bool
     {
-        return ($this->userModel->getGroup() === Group::SUPER);
+        return ($this->userModel->getGroup() === UserGroup::SUPER);
     }
 
     public function is(string $role): bool
