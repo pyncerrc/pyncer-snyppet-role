@@ -49,7 +49,7 @@ class RoleMiddleware implements MiddlewareInterface
                 $access->getUser()
             );
 
-            ID::register('role');
+            ID::register(ID::role());
 
             $handler->set(ID::role(), $roles);
         }
