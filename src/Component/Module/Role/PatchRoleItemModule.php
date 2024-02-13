@@ -27,6 +27,6 @@ class PatchRoleItemModule extends AbstractPatchItemModule
     protected function forgeMapperQuery(): MapperQueryInterface
     {
         $connection = $this->get(ID::DATABASE);
-        return new RoleMapperQuery($connection, $this->request);
+        return new RoleMapperQuery($connection);
     }
 }
