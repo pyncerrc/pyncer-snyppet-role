@@ -11,7 +11,7 @@ class RoleManager
     /**
      * @var array<RoleModel>
      */
-    protected array $roles;
+    protected array $roles = [];
 
     public function __construct(
         protected ConnectionInterface $connection,
