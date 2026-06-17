@@ -52,6 +52,27 @@ class RoleManager
         }
     }
 
+    public function addRoles(string ...$roles): static
+    {
+        $this->roles = [$this->roles, ...$roles];
+        $this->roles = array_unique($this->roles);
+        return $this;
+    }
+
+    public function deleteRoles(string ...$roles): static
+    {
+        $resultRoles = [];
+
+        foreach ($this->roles as $role) {
+            if (!in_array($role, $roles)) {
+                $resultRoles[] = $role;
+            }
+        }
+
+        $this->roles = $resultRoles;
+        return $this;
+    }
+
     public function isGuest(): bool
     {
         return ($this->userModel->getGroup() === UserGroup::GUEST);
