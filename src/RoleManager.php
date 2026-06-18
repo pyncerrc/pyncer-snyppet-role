@@ -33,15 +33,23 @@ class RoleManager
             ->compare(['user__role', 'user_id'], $this->userModel->getId());
 
         switch ($this->userModel->getGroup()) {
+            case UserGroup::SUPER:
+                $this->roles[] = 'super';
+                $this->roles[] = 'admin';
+                $this->roles[] = 'user';
             case UserGroup::ADMIN:
                 $where->compare('group', 'super', '!=');
+                $this->roles[] = 'admin';
+                $this->roles[] = 'user';
                 break;
             case UserGroup::USER:
                 $where->compare('group', 'super', '!=');
                 $where->compare('group', 'admin', '!=');
+                $this->roles[] = 'user';
                 break;
             case UserGroup::GUEST:
                 $where->compare('group', 'guest');
+                $this->roles[] = 'guest';
                 break;
         }
 
@@ -50,6 +58,17 @@ class RoleManager
         while ($row = $this->connection->fetch($result)) {
             $this->roles[] = $row['alias'];
         }
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = array_unique($roles);
+        return $this;
     }
 
     public function addRoles(string ...$roles): static
@@ -113,29 +132,6 @@ class RoleManager
         }
 
         foreach ($roles as $role) {
-            switch ($role) {
-                case 'super':
-                    if ($this->isSuper()) {
-                        return true;
-                    }
-                    break;
-                case 'admin':
-                    if ($this->isAdmin()) {
-                        return true;
-                    }
-                    break;
-                case 'user':
-                    if ($this->isUser()) {
-                        return true;
-                    }
-                    break;
-                case 'guest':
-                    if ($this->isGuest()) {
-                        return true;
-                    }
-                    break;
-            }
-
             if (in_array($role, $this->roles, true)) {
                 return true;
             }
@@ -151,29 +147,6 @@ class RoleManager
         }
 
         foreach ($roles as $role) {
-            switch ($role) {
-                case 'super':
-                    if (!$this->isSuper()) {
-                        return false;
-                    }
-                    break;
-                case 'admin':
-                    if (!$this->isAdmin()) {
-                        return false;
-                    }
-                    break;
-                case 'user':
-                    if (!$this->isUser()) {
-                        return false;
-                    }
-                    break;
-                case 'guest':
-                    if (!$this->isGuest()) {
-                        return false;
-                    }
-                    break;
-            }
-
             if (!in_array($this->roles, $role, true)) {
                 return false;
             }
